@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `mydb` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `mydb`;
+CREATE DATABASE  IF NOT EXISTS `YesWeCan` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `YesWeCan`;
 -- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
--- Host: localhost    Database: mydb
+-- Host: localhost    Database: YesWeCan
 -- ------------------------------------------------------
 -- Server version	5.6.14
 
