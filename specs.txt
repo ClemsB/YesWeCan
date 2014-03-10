@@ -1,0 +1,64 @@
+h1. Spécifications Application WEB JavaEE
+
+h2. Application YesWeCan
+
+Application Web d'aide au financement participatif, sur le modèle de www.wemakeit.ch
+
+h3. Pages
+
+* Accueil présentant une liste des projets
+* Login
+* Création / modixf d'un user avec liste des projets crées ou soutenus
+* Présentation d'un projet spécifique
+* création / modification d'un projet
+* Soutien à un projet
+
+h3. Création / modif de user
+
+* un user possède les infos suivante et peut les modifier
+** Nom, Prénom
+** Adresse
+** Année de naissance
+** E-mail
+** password
+* Une liste des projets crées ou soutenu est également présente
+
+
+h3. Présentation d'un projet
+
+* Afficahge des informations d'un projet :
+** Nom
+** Description (HTML)
+** Vidéo / images
+** Montant désiré
+** Montant atteint jusqu'a maintenant
+** Nombre de contributeurs
+** Jours restant pour le soutient
+** Liste de contreparties
+** Un bouton pour soutenir le projet
+** Liens pour partage social (addthis.com)
+
+
+h3. Création / modification d'un projet
+
+* L'utilisateur logué peut crée un projet en renseignant les infos suivantes :
+** Nom
+** Description (HTML)
+** Vidéo / images
+** Montant désiré
+** Date limite pour le soutien
+** Liste de contreparties
+*** Une contrepartie contient une description et un montant (event. nombre disponible)
+** Un bouton pour soutenir le projet
+** Liens pour partage social (addthis.com)
+
+h3. Soutien à un projet
+
+* l'utilisateur logué peut soutenir un projet soit:
+** en entrant un montant de son choix
+** et en choisissant une contrepartie OU PAS.
+
+h3. Navigation
+
+* Une barre de navigation toujours présente avec les élements suivants :
+** Accueil - Projets - Compte - login/déconn.
