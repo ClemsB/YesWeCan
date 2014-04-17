@@ -31,4 +31,23 @@ public class ProjectsController implements Serializable {
     public List<Projects> getLastProjects() {
         return projectsFacade.getLasts();
     }
+    
+    public List<Projects> getAll() {
+        return projectsFacade.getAll();
+    }
+    
+    public Projects getId(int id) {
+        if(projectsFacade.isValidId(id))
+            return projectsFacade.getId(id);
+        else
+            return null;
+    }
+    
+    public void backProject(int id) {
+        
+    }
+    
+    public void createProject() {
+        
+    }
 }

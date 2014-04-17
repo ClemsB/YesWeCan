@@ -6,6 +6,7 @@ package YesWeCan;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -35,11 +38,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Projects.findById", query = "SELECT p FROM Projects p WHERE p.id = :id"),
     @NamedQuery(name = "Projects.findByNom", query = "SELECT p FROM Projects p WHERE p.nom = :nom"),
     @NamedQuery(name = "Projects.findByTargetSum", query = "SELECT p FROM Projects p WHERE p.targetSum = :targetSum"),
-    @NamedQuery(name = "Projects.findByCurrentSum", query = "SELECT p FROM Projects p WHERE p.currentSum = :currentSum"),
-    @NamedQuery(name = "Projects.findByDelay", query = "SELECT p FROM Projects p WHERE p.delay = :delay"),
-    @NamedQuery(name = "Projects.findByProjectscol", query = "SELECT p FROM Projects p WHERE p.projectscol = :projectscol")})
+    @NamedQuery(name = "Projects.findByDelay", query = "SELECT p FROM Projects p WHERE p.delay = :delay")})
 
 public class Projects implements Serializable {
+    @Column(name = "delay")
+    @Temporal(TemporalType.DATE)
+    private Date delay;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,13 +60,6 @@ public class Projects implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "targetSum")
     private Double targetSum;
-    @Column(name = "currentSum")
-    private Double currentSum;
-    @Column(name = "delay")
-    private Integer delay;
-    @Size(max = 45)
-    @Column(name = "projectscol")
-    private String projectscol;
     @JoinColumn(name = "idUser", referencedColumnName = "id")
     @ManyToOne
     private Users idUser;
@@ -107,29 +104,14 @@ public class Projects implements Serializable {
     public void setTargetSum(Double targetSum) {
         this.targetSum = targetSum;
     }
-
-    public Double getCurrentSum() {
-        return currentSum;
-    }
-
-    public void setCurrentSum(Double currentSum) {
-        this.currentSum = currentSum;
-    }
-
-    public Integer getDelay() {
-        return delay;
-    }
-
-    public void setDelay(Integer delay) {
-        this.delay = delay;
-    }
-
-    public String getProjectscol() {
-        return projectscol;
-    }
-
-    public void setProjectscol(String projectscol) {
-        this.projectscol = projectscol;
+    
+    public double getCurrentSum() {
+        double sum = 0;
+        for(Rewards reward : this.getRewardsCollection())
+        {
+            sum += reward.getUsersNumber()*reward.getPrize();
+        }
+        return sum;
     }
 
     public Users getIdUser() {
@@ -172,6 +154,18 @@ public class Projects implements Serializable {
     @Override
     public String toString() {
         return "YesWeCan.Projects[ id=" + id + " ]";
+    }
+
+    public Date getDelay() {
+        return delay;
+    }
+
+    public void setDelay(Date delay) {
+        this.delay = delay;
+    }
+
+    private void foreach(Collection<Rewards> rewardsCollection) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
