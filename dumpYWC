@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `YesWeCan` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `YesWeCan`;
+CREATE DATABASE  IF NOT EXISTS `yeswecan` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `yeswecan`;
 -- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
--- Host: localhost    Database: YesWeCan
+-- Host: localhost    Database: yeswecan
 -- ------------------------------------------------------
--- Server version	5.6.14
+-- Server version	5.6.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +16,30 @@ USE `YesWeCan`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `groups`
+--
+
+DROP TABLE IF EXISTS `groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `groups` (
+  `id` int(11) NOT NULL,
+  `groupname` varchar(45) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `groups`
+--
+
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `projects`
@@ -30,14 +54,12 @@ CREATE TABLE `projects` (
   `nom` varchar(45) DEFAULT NULL,
   `description` text,
   `targetSum` double DEFAULT NULL,
-  `currentSum` double DEFAULT NULL,
-  `delay` int(11) DEFAULT NULL,
-  `projectscol` varchar(45) DEFAULT NULL,
+  `delay` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `idUser_idx` (`idUser`),
   CONSTRAINT `idUser` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +68,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,1,'exemple1','blablablalblabla',1200,20,50,NULL);
+INSERT INTO `projects` VALUES (1,1,'exemple1','blablablalblabla',1200,NULL),(2,NULL,'test0','desc0',NULL,NULL),(3,NULL,'test1','desc1',NULL,NULL),(4,NULL,'test2','desc2',NULL,NULL),(5,NULL,'test3','desc3',NULL,NULL),(6,NULL,'test4','desc4',NULL,NULL),(7,NULL,'test5','desc5',NULL,NULL);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,8 +82,9 @@ DROP TABLE IF EXISTS `rewards`;
 CREATE TABLE `rewards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idProject` int(11) DEFAULT NULL,
-  `amount` double DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
   `description` text,
+  `prize` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `idProject_idx` (`idProject`),
@@ -75,8 +98,34 @@ CREATE TABLE `rewards` (
 
 LOCK TABLES `rewards` WRITE;
 /*!40000 ALTER TABLE `rewards` DISABLE KEYS */;
-INSERT INTO `rewards` VALUES (1,1,500,'Blibliblbibliblbi');
+INSERT INTO `rewards` VALUES (1,1,10,'Blibliblbibliblbi',100);
 /*!40000 ALTER TABLE `rewards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_has_reward`
+--
+
+DROP TABLE IF EXISTS `user_has_reward`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_has_reward` (
+  `userId` int(11) NOT NULL,
+  `rewardId` int(11) NOT NULL,
+  PRIMARY KEY (`userId`,`rewardId`),
+  KEY `rewardId_idx` (`rewardId`),
+  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `rewardId` FOREIGN KEY (`rewardId`) REFERENCES `rewards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_has_reward`
+--
+
+LOCK TABLES `user_has_reward` WRITE;
+/*!40000 ALTER TABLE `user_has_reward` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_has_reward` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -115,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-04 13:36:25
+-- Dump completed on 2014-04-17 13:19:31
