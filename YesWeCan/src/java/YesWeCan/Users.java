@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,6 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username"),
     @NamedQuery(name = "Users.findByPasswd", query = "SELECT u FROM Users u WHERE u.passwd = :passwd")})
 public class Users implements Serializable {
+    @ManyToMany(mappedBy = "usersCollection")
+    private Collection<Rewards> rewardsCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,6 +114,15 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "YesWeCan.Users[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Rewards> getRewardsCollection() {
+        return rewardsCollection;
+    }
+
+    public void setRewardsCollection(Collection<Rewards> rewardsCollection) {
+        this.rewardsCollection = rewardsCollection;
     }
     
 }

@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16 avr. 2014, 11:58:13
+    Author     : Lanfeust
+*/
+body { 
+    padding-top: 65px; 
+}
+
+.reward-item {
+    background-color: lightgreen;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 1px 15px 10px 10px;
+}
+
+.montant {
+    background-color: lightgray;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 1px 15px 10px 10px;
+}

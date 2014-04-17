@@ -33,4 +33,23 @@ public class ProjectsFacade extends AbstractFacade<Projects> {
         return em.createQuery(query).setMaxResults(5).getResultList();
     }
     
+    public List<Projects> getAll() {
+        String query = "SELECT p FROM Projects p ORDER BY p.id DESC";
+        return em.createQuery(query).getResultList();
+    }
+    
+    public Projects getId(int id) {
+        String query = "SELECT p FROM Projects p WHERE p.id = ?1";
+        return (Projects)em.createQuery(query).setParameter(1,id).getSingleResult();
+    }
+    
+    public boolean isValidId(int id) {
+        String query = "SELECT count(p) FROM Projects p WHERE p.id = ?1";
+        long result = (long)em.createQuery(query).setParameter(1,id).getSingleResult();
+        if(result > 0)
+            return true;
+        else
+            return false;
+    }
+    
 }

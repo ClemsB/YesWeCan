@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>
+        <ui:composition template="/template/layout.xhtml">
+            <ui:param name="project" value="#{projectsController.getId(param['id'])}" />
+            <ui:define name="title">#{project.nom}</ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <h1>
+                                <h:outputLabel id="nomLabel" for="nom" value="Nom :" /><br />
+                                <h:inputText id="nom" value="#{project.nom}" />
+                                <h:outputLabel id="delayLabel" for="nom" value="Nom :" /><br />
+                                <h:inputText value="#{project.delay}">  
+                                    <f:convertDateTime pattern="yyyy-MM-dd"/>  
+                                </h:inputText>
+                            </h1>
+                            <hr />
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <ui:include src="/login.xhtml" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <p>
+                                <h2>
+                                    <h:outputLabel id="descriptionLabel" for="description" value="Description :" />
+                                </h2>
+                                <br />
+                                <h:inputTextarea id="description" value="#{project.description}" />
+                            </p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <h1>
+                                <h:outputLabel id="targetSumLabel" for="targetSum" value="Somme désirée :" />
+                                <h:inputText id="targetSum" value="#{project.targetSum}" />
+                            </h1>
+
+                            <h2>Récompenses :</h2>
+                            <script>
+                            $(document).ready(function() {
+                                $("#create-reward").on("click", function() {
+                                    
+                                });
+                            });
+                            </script>
+                            <h:commandButton id="create-reward" value="button" type="button" class="btn btn-default"/>
+                            <div class="reward-list">
+                                <ui:repeat var="reward" value="#{project.rewardsCollection}" varStatus="status">
+                                    <div class="reward-item">
+                                        <div class="reward" data-id="#{reward.id}">
+                                            <h2>
+                                                <h:outputLabel id="prizeLabel" for="amount" value="Prix (CHF) :" />
+                                                <h:inputText id="prize" value="#{reward.prize}" />
+                                                <h:outputLabel id="amountLabel" for="amount" value="Nombre :" />
+                                                <h:inputText id="amount" value="#{reward.amount}" />
+                                            </h2>
+                                        </div>
+                                        <p id="reward_#{reward.id}" class="">#{reward.description}</p>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </div>
+                    </div>
+                    <h:commandButton value="Create" class="btn btn-success" action="#{projectsController.createProject()}" />	
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
