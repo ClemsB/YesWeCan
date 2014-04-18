@@ -7,17 +7,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     
-    <h:body>         
+    <h:body>
         <ui:composition template="/template/layout.xhtml">
             <ui:define name="title">Login</ui:define>
             <ui:define name="content">
-        <h:form>                
-            Username: <input type="text" name="username" />   
-            Password: <input type="password" name="password" />  
-            <h:commandButton value="Login" action="#{userController.login()}" />              
-            <input type="reset" value="Reset" />          
-        </h:form>
-                </ui:define>
+        #{userController.logout()}
+        Vous avez été deconnecté.
+        <h:link outcome="index">page d'accueil</h:link>
+            </ui:define>
         </ui:composition>
     </h:body> 
 </html>
