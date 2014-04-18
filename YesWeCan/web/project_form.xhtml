@@ -12,23 +12,27 @@
     <body>
         <ui:composition template="/template/layout.xhtml">
             <ui:param name="project" value="#{projectsController.getId(param['id'])}" />
-            <ui:define name="title">#{project.nom}</ui:define>
+            <ui:define name="title">Yes We Can :: #{project.nom}</ui:define>
             <ui:define name="content">
-                <h:form>
+                <h:form id="project">
+                    <h:inputHidden id="id" value="#{project.id}" />
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <h1>
+                            <h2>
                                 <h:outputLabel id="nomLabel" for="nom" value="Nom :" /><br />
-                                <h:inputText id="nom" value="#{project.nom}" />
-                                <h:outputLabel id="delayLabel" for="nom" value="Nom :" /><br />
-                                <h:inputText value="#{project.delay}">  
+                                <h:inputText id="nom" value="#{project.nom}" class="form-control" /><br />
+                                <h:outputLabel id="delayLabel" for="delay" value="Delay :" /><br />
+                                <h:inputText id="delay" value="#{project.delay}" class="form-control">  
                                     <f:convertDateTime pattern="yyyy-MM-dd"/>  
                                 </h:inputText>
-                            </h1>
+                            </h2>
                             <hr />
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <ui:include src="/login.xhtml" />
+                            <h2>
+                                <h:outputLabel id="targetSumLabel" for="targetSum" value="Somme désirée :" />
+                                <h:inputText id="targetSum" value="#{project.targetSum}" class="form-control" />
+                            </h2>
                         </div>
                     </div>
                     <div class="row">
@@ -38,42 +42,39 @@
                                     <h:outputLabel id="descriptionLabel" for="description" value="Description :" />
                                 </h2>
                                 <br />
-                                <h:inputTextarea id="description" value="#{project.description}" />
+                                <h:inputTextarea id="description" value="#{project.description}" class="form-control" />
                             </p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <h1>
-                                <h:outputLabel id="targetSumLabel" for="targetSum" value="Somme désirée :" />
-                                <h:inputText id="targetSum" value="#{project.targetSum}" />
-                            </h1>
-
                             <h2>Récompenses :</h2>
-                            <script>
-                            $(document).ready(function() {
-                                $("#create-reward").on("click", function() {
-                                    
-                                });
-                            });
-                            </script>
-                            <h:commandButton id="create-reward" value="button" type="button" class="btn btn-default"/>
+                            <h:button value="Ajouter" outcome="reward" class="btn btn-default">
+                                <f:param name="id" value="#{project.id}" />
+                            </h:button>
+                            <hr />
                             <div class="reward-list">
                                 <ui:repeat var="reward" value="#{project.rewardsCollection}" varStatus="status">
                                     <div class="reward-item">
-                                        <div class="reward" data-id="#{reward.id}">
+                                        <h:form id="reward">
+                                            <h:inputHidden id="id" value="#{reward.id}" />
+                                        <div class="reward">
                                             <h2>
                                                 <h:outputLabel id="prizeLabel" for="amount" value="Prix (CHF) :" />
-                                                <h:inputText id="prize" value="#{reward.prize}" />
+                                                <h:inputText id="prize" value="#{reward.prize}" class="form-control" />
                                                 <h:outputLabel id="amountLabel" for="amount" value="Nombre :" />
-                                                <h:inputText id="amount" value="#{reward.amount}" />
+                                                <h:inputText id="amount" value="#{reward.amount}" class="form-control" />
                                             </h2>
                                         </div>
-                                        <p id="reward_#{reward.id}" class="">#{reward.description}</p>
+                                        <p id="reward_#{reward.id}" class="">
+                                            <h:inputTextarea id="description" value="#{reward.description}" class="form-control" />
+                                        </p>
+                                        <h:commandButton value="Modifier" class="btn btn-success" action="#{rewardController.modifyReward()}" />	
+                                        </h:form>
                                     </div>
                                 </ui:repeat>
                             </div>
                         </div>
                     </div>
-                    <h:commandButton value="Create" class="btn btn-success" action="#{projectsController.createProject()}" />	
+                    <h:commandButton value="#{(param['id'] != null || projectsController.getSavedId() != 0)?'Modifier':'Créer'}" class="btn btn-primary" action="#{projectsController.doProject()}" />
                 </h:form>
             </ui:define>
         </ui:composition>

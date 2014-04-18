@@ -28,6 +28,15 @@ public class ProjectsFacade extends AbstractFacade<Projects> {
         super(Projects.class);
     }
     
+    public void createProject(Projects project) {
+        em.persist(project);
+        em.flush();
+    }
+    
+    public void updateProject(Projects project) {
+        em.merge(project);
+    }
+    
     public List<Projects> getLasts() {
         String query = "SELECT p FROM Projects p ORDER BY p.id DESC";
         return em.createQuery(query).setMaxResults(5).getResultList();

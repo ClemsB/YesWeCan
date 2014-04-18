@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/layout.xhtml">
+            <ui:define name="title">Yes We Can :: Créer récompense</ui:define>
+            <ui:define name="content">
+                <h:form>
+                <div class="reward">
+                    <h2>
+                        <h:outputLabel id="prizeLabel" for="amount" value="Prix (CHF) :" />
+                        <h:inputText id="prize" value="" class="form-control" />
+                        <h:outputLabel id="amountLabel" for="amount" value="Nombre :" />
+                        <h:inputText id="amount" value="" class="form-control" />
+                    </h2>
+                </div>
+                <p>
+                    <h2><h:outputLabel id="descriptionLabel" for="description" value="Description :" /></h2>
+                    <h:inputTextarea id="description" value="" class="form-control" />
+                </p>
+                <h:commandButton value="Ajouter" class="btn btn-success" action="#{rewardController.createReward()}" />	
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
