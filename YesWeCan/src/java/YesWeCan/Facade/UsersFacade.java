@@ -27,4 +27,22 @@ public class UsersFacade extends AbstractFacade<Users> {
         super(Users.class);
     }
     
+    public boolean isValidUser(String user) {
+        String query = "SELECT u FROM Users u WHERE u.username = '"+user+"'";
+       
+        if(em.createQuery(query).getResultList().size() == 1)
+            return true;
+        
+        return false;
+    }
+    
+    public boolean isValidUserPass(String user, String pwd) {
+        String query = "SELECT u FROM Users u WHERE u.username = '"+user+"' AND u.passwd = '"+pwd+"'";
+       
+        if(em.createQuery(query).getResultList().size() == 1)
+            return true;
+        
+        return false;
+    }
+    
 }
