@@ -42,6 +42,22 @@ public class UserController implements Serializable {
     
     }
     
+    public Users getId(int userId){
+        if(usersFacade.isValidId(userId))
+            return usersFacade.getId(userId);
+        return null;
+    }
+    
+    public Users getLoggedUser() {
+        if(isLogged())
+        {
+            req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            String u = (String)req.getSession().getAttribute("isLoggedIn");
+            return usersFacade.getUserByUsername(u);
+        }
+        return null;
+    }
+    
     public void create(){
         req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String user = req.getParameter("username");
@@ -84,6 +100,12 @@ public class UserController implements Serializable {
     public boolean isLogged(){
         req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String u = (String)req.getSession().getAttribute("isLoggedIn");
+        if(u == null)
+            return false;
         return u.equals(username);
+    }
+    
+    public boolean isNotLogged(){
+        return !isLogged();
     }
 }

@@ -23,12 +23,22 @@
                                 <li class="">
                                     <h:link outcome="projects">Projets</h:link>
                                 </li>
+                                <h:panelGroup rendered="#{userController.isLogged()}">
                                 <li class="">
                                     <h:link outcome="project_form">Créer un projet</h:link>
                                 </li>
                                 <li>
-                                    <a href="#">Mes projets</a>
+                                    <h:link outcome="my_projects">Mes projets</h:link>
                                 </li>
+                                <li>
+                                    <h:link outcome="logout">logout</h:link>
+                                </li>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{userController.isNotLogged()}">
+                                <li>
+                                    <h:link outcome="login">login</h:link>
+                                </li>
+                                </h:panelGroup>
                             </ul>
                         </div><!--/.nav-collapse -->
                     </div>

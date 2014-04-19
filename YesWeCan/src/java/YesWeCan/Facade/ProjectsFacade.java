@@ -5,6 +5,7 @@
 package YesWeCan.Facade;
 
 import YesWeCan.Projects;
+import YesWeCan.Users;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -45,6 +46,11 @@ public class ProjectsFacade extends AbstractFacade<Projects> {
     public List<Projects> getAll() {
         String query = "SELECT p FROM Projects p ORDER BY p.id DESC";
         return em.createQuery(query).getResultList();
+    }
+    
+    public List<Projects> getUserProjects(Users user) {
+        String query = "SELECT p FROM Projects p WHERE p.idUser = ?1 ORDER BY p.id DESC";
+        return em.createQuery(query).setParameter(1,user).getResultList();
     }
     
     public Projects getId(int id) {

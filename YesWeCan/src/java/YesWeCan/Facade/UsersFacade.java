@@ -27,6 +27,27 @@ public class UsersFacade extends AbstractFacade<Users> {
         super(Users.class);
     }
     
+    public boolean isValidId(int id) {
+        String query = "SELECT u FROM Users u WHERE u.id = '"+id+"'";
+       
+        if(em.createQuery(query).getResultList().size() == 1)
+            return true;
+        
+        return false;
+    }
+    
+    public Users getUserByUsername(String username) {
+        String query = "SELECT u FROM Users u WHERE u.username = '"+username+"'";
+        if(em.createQuery(query).getResultList().size() == 1)
+            return (Users)em.createQuery(query).getSingleResult();
+        return null;
+    }
+    
+    public Users getId(int id) {
+        String query = "SELECT u FROM Users u WHERE u.id = '"+id+"'";
+        return (Users)em.createQuery(query).getSingleResult();
+    }
+    
     public boolean isValidUser(String user) {
         String query = "SELECT u FROM Users u WHERE u.username = '"+user+"'";
        
