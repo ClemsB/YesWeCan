@@ -9,7 +9,10 @@ import YesWeCan.Facade.UsersFacade;
 import YesWeCan.Projects;
 import YesWeCan.Users;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -48,6 +51,7 @@ public class ProjectsController implements Serializable {
     }
     
     public List<Projects> getAll() {
+            System.out.println("GET ALLLLLs");
         return projectsFacade.getAll();
     }
     
@@ -89,7 +93,17 @@ public class ProjectsController implements Serializable {
         
         // Setting values
         project.setNom(requestParams.get("project:nom"));
-        //project.setDelay(requestParams.get("delay"));
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+	try {
+ 
+		Date date = formatter.parse(requestParams.get("project:delay"));
+                project.setDelay(date);
+ 
+	} catch (ParseException e) {
+		e.printStackTrace();
+	}
+        
         project.setDescription(requestParams.get("project:description"));
         if(!requestParams.get("project:targetSum").equals(""))
             project.setTargetSum(Double.valueOf(requestParams.get("project:targetSum")));
@@ -106,6 +120,11 @@ public class ProjectsController implements Serializable {
                 projectsFacade.updateProject(project);
             }
         }
+    }
+    
+    public void deleteProject(int projectId) {
+        if(projectsFacade.isValidId(projectId))
+            projectsFacade.deleteProject(projectsFacade.getId(projectId));
     }
     
     public boolean isUserProject(int projectId) {

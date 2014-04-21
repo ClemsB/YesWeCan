@@ -38,7 +38,9 @@
                                     </h:link>
                                 </td>
                                 <td>
-                                    <h:outputText value="#{project.delay}" />
+                                    <h:outputText value="#{project.delay}" >
+                                        <f:convertDateTime pattern="dd.MM.yyyy" />
+                                    </h:outputText>
                                 </td>
                                 <td>
                                     <h:outputText value="#{project.currentSum}" />

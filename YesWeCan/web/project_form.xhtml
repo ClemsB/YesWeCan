@@ -21,10 +21,11 @@
                             <h2>
                                 <h:outputLabel id="nomLabel" for="nom" value="Nom :" /><br />
                                 <h:inputText id="nom" value="#{project.nom}" class="form-control" /><br />
-                                <h:outputLabel id="delayLabel" for="delay" value="Delay :" /><br />
-                                <h:inputText id="delay" value="#{project.delay}" class="form-control">  
-                                    <f:convertDateTime pattern="yyyy-MM-dd"/>  
+                                <h:outputLabel id="delayLabel" for="delay" value="Délai :" /><br />
+                                <h:inputText id="delay" value="#{project.delay}" class="form-control" label="Délai" required="true">
+                                    <f:convertDateTime pattern="dd.MM.yyyy" />
                                 </h:inputText>
+                                <h:message for="delay" style="color:red" />
                             </h2>
                             <hr />
                         </div>
@@ -47,29 +48,31 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <h2>Récompenses :</h2>
-                            <h:button value="Ajouter" outcome="reward" class="btn btn-default">
+                            <h:button value="Ajouter" outcome="reward" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}">
                                 <f:param name="id" value="#{project.id}" />
                             </h:button>
                             <hr />
                             <div class="reward-list">
                                 <ui:repeat var="reward" value="#{project.rewardsCollection}" varStatus="status">
                                     <div class="reward-item">
-                                        <h:form id="reward">
-                                            <h:inputHidden id="id" value="#{reward.id}" />
                                         <div class="reward">
                                             <h2>
                                                 <h:outputLabel id="prizeLabel" for="amount" value="Prix (CHF) :" />
-                                                <h:inputText id="prize" value="#{reward.prize}" class="form-control" />
+                                                <h:outputText id="prize" value="#{reward.prize}" />
                                                 <h:outputLabel id="amountLabel" for="amount" value="Nombre :" />
-                                                <h:inputText id="amount" value="#{reward.amount}" class="form-control" />
+                                                <h:outputText id="amount" value="#{reward.amount}" />
                                             </h2>
                                         </div>
                                         <p id="reward_#{reward.id}" class="">
-                                            <h:inputTextarea id="description" value="#{reward.description}" class="form-control" />
+                                            <h:outputText id="description" value="#{reward.description}" /><br />
+                                            <h:button value="Modifier" outcome="mod_reward" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}">
+                                                <f:param name="id" value="#{reward.id}" />
+                                            </h:button>
+                                            <h:form>
+                                                <h:commandButton value="Supprimer" action="#{rewardsController.deleteReward(reward.id)}" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}" />
+                                            </h:form>
                                         </p>
-                                        <h:commandButton value="Modifier" class="btn btn-success" action="#{rewardController.modifyReward()}" />	
-                                        </h:form>
-                                    </div>
+                                        </div>
                                 </ui:repeat>
                             </div>
                         </div>

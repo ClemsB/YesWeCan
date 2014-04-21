@@ -67,10 +67,12 @@ public class Projects implements Serializable {
     private Collection<Rewards> rewardsCollection;
 
     public Projects() {
+        this.delay = new Date();
     }
 
     public Projects(Integer id) {
         this.id = id;
+        this.delay = new Date();
     }
 
     public Integer getId() {
@@ -107,6 +109,8 @@ public class Projects implements Serializable {
     
     public double getCurrentSum() {
         double sum = 0;
+        if(this.getRewardsCollection() == null)
+            return 0;
         for(Rewards reward : this.getRewardsCollection())
         {
             sum += reward.getUsersNumber()*reward.getPrize();

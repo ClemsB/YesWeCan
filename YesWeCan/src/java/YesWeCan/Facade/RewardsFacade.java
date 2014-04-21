@@ -27,4 +27,34 @@ public class RewardsFacade extends AbstractFacade<Rewards> {
         super(Rewards.class);
     }
     
+    public void createReward(Rewards reward) {
+        em.persist(reward);
+        em.flush();
+    }
+    
+    public void updateReward(Rewards reward) {
+        em.merge(reward);
+    }
+    
+    public void deleteReward(Rewards reward) {
+        if(!em.contains(reward))
+            em.merge(reward);
+        em.remove(reward);
+        em.flush();
+    }
+    
+    public Rewards getId(int id) {
+        String query = "SELECT r FROM Rewards r WHERE r.id = ?1";
+        return (Rewards)em.createQuery(query).setParameter(1,id).getSingleResult();
+    }
+    
+    public boolean isValidId(int id) {
+        String query = "SELECT count(r) FROM Rewards r WHERE r.id = ?1";
+        long result = (long)em.createQuery(query).setParameter(1,id).getSingleResult();
+        if(result > 0)
+            return true;
+        else
+            return false;
+    }
+    
 }

@@ -38,6 +38,14 @@ public class ProjectsFacade extends AbstractFacade<Projects> {
         em.merge(project);
     }
     
+    public void deleteProject(Projects project) {
+        // Not working ?!?
+        //em.remove(em.contains(project) ? project : em.merge(project));
+        //em.flush();
+        String query = "DELETE FROM Projects p, Rewards r WHERE r.idProject = ?1 AND p.id = ?1";
+        em.createQuery(query).setParameter(1,project.getId()).getResultList();
+    }
+    
     public List<Projects> getLasts() {
         String query = "SELECT p FROM Projects p ORDER BY p.id DESC";
         return em.createQuery(query).setMaxResults(5).getResultList();
