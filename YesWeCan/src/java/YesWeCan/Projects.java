@@ -22,6 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -42,7 +45,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 public class Projects implements Serializable {
     @Column(name = "delay")
+    @NotNull
     @Temporal(TemporalType.DATE)
+    @Future
     private Date delay;
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,13 +57,17 @@ public class Projects implements Serializable {
     private Integer id;
     @Size(max = 45)
     @Column(name = "nom")
+    @NotNull
     private String nom;
     @Lob
     @Size(max = 65535)
     @Column(name = "description")
+    @NotNull
     private String description;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "targetSum")
+    @Digits(integer=6,fraction=2)
+    @NotNull
     private Double targetSum;
     @JoinColumn(name = "idUser", referencedColumnName = "id")
     @ManyToOne

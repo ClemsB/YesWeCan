@@ -20,6 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,9 +40,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rewards.findByAmount", query = "SELECT r FROM Rewards r WHERE r.amount = :amount")})
 public class Rewards implements Serializable {
     @Column(name = "amount")
+    @DecimalMin("5.00")
+    @NotNull
+    @Digits(integer=6, fraction=2)
     private Integer amount;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "prize")
+    @DecimalMin("5.00")
+    @NotNull
+    @Digits(integer=6, fraction=2)
     private Double prize;
     @JoinTable(name = "user_has_reward", joinColumns = {
         @JoinColumn(name = "rewardId", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -54,6 +63,7 @@ public class Rewards implements Serializable {
     private Integer id;
     @Lob
     @Size(max = 65535)
+    @NotNull
     @Column(name = "description")
     private String description;
     @JoinColumn(name = "idProject", referencedColumnName = "id")
