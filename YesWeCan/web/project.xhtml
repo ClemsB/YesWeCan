@@ -20,8 +20,9 @@
                             <h:button value="Modifier" outcome="project_form" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}">
                                 <f:param name="id" value="#{project.id}" />
                             </h:button>
-                            <h:form>
-                                <h:commandButton value="Supprimer" action="#{projectsController.deleteProject(project.id)}" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}" />
+                            <h:form id="delete">
+                                <h:inputHidden id="id" value="#{project.id}" />
+                                <h:commandButton value="Supprimer" action="#{projectsController.deleteProject()}" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}" />
                             </h:form>
                         <h2>
                             <h:outputText value="#{project.delay}" >

@@ -122,7 +122,13 @@ public class ProjectsController implements Serializable {
         }
     }
     
-    public void deleteProject(int projectId) {
+    public void deleteProject() {
+        facesCtx = FacesContext.getCurrentInstance();
+        extContext = facesCtx.getExternalContext();
+        requestParams = extContext.getRequestParameterMap();
+        
+        int projectId = Integer.valueOf(requestParams.get("delete:id"));
+        System.out.println("DELETE");
         if(projectsFacade.isValidId(projectId))
             projectsFacade.deleteProject(projectsFacade.getId(projectId));
     }

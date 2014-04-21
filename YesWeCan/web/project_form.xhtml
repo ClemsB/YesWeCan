@@ -68,9 +68,7 @@
                                             <h:button value="Modifier" outcome="mod_reward" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}">
                                                 <f:param name="id" value="#{reward.id}" />
                                             </h:button>
-                                            <h:form>
-                                                <h:commandButton value="Supprimer" action="#{rewardsController.deleteReward(reward.id)}" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}" />
-                                            </h:form>
+                                                <h:commandLink value="Supprimer" action="#{rewardsController.deleteReward(reward.id)}" class="btn btn-default" rendered="#{projectsController.isUserProject(project.id)}" />
                                         </p>
                                         </div>
                                 </ui:repeat>
