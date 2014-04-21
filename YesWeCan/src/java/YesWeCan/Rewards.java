@@ -62,7 +62,7 @@ public class Rewards implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Lob
-    @Size(max = 65535)
+    @Size(min=3, max = 65535)
     @NotNull
     @Column(name = "description")
     private String description;

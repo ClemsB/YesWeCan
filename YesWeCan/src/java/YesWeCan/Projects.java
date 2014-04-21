@@ -55,12 +55,12 @@ public class Projects implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Size(min=3, max = 45)
     @Column(name = "nom")
     @NotNull
     private String nom;
     @Lob
-    @Size(max = 65535)
+    @Size(min=3, max = 65535)
     @Column(name = "description")
     @NotNull
     private String description;
