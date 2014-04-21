@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
@@ -11,11 +12,12 @@
         <ui:composition template="/template/layout.xhtml">
             <ui:define name="title">Login</ui:define>
             <ui:define name="content">
+            <c:if test="${param.invalid == 'true'}">invalid credentials</c:if>
         <h:form>                
             Username: <input type="text" name="username" />   
             Password: <input type="password" name="password" />  
             <h:commandButton value="Login" action="#{userController.login()}" />              
-            <input type="reset" value="Reset" />          
+            <h:commandButton value="Create" action="#{userController.create()}" />         
         </h:form>
                 </ui:define>
         </ui:composition>
