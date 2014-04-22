@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -42,10 +43,12 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Size(min=3, max = 45)
+    @NotNull
     @Column(name = "username")
     private String username;
-    @Size(max = 45)
+    @Size(min=3, max = 45)
+    @NotNull
     @Column(name = "passwd")
     private String passwd;
     @OneToMany(mappedBy = "idUser")

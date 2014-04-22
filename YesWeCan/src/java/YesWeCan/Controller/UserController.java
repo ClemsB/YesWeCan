@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +40,6 @@ public class UserController implements Serializable {
     private RewardsFacade rewardsFacade;
     
     public UserController() {
-        
     
     }
     
@@ -58,18 +59,20 @@ public class UserController implements Serializable {
         return null;
     }
     
-    public void create(){
+    public void create() throws IOException{
         req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse rep = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         String user = req.getParameter("username");
         if(!usersFacade.isValidUser(user)){
-            String passwd = req.getParameter("passwd");
-            String mail = req.getParameter("mail");
+            String passwd = req.getParameter("password");
             Users newUser = new Users();
             newUser.setPasswd(passwd);
             newUser.setUsername(user);
             username = user;
             usersFacade.create(newUser);
             req.getSession(true).setAttribute("isLoggedIn", user);
+            rep.sendRedirect("index.xhtml?logged=true");
+            
         }
     }
     
@@ -83,9 +86,9 @@ public class UserController implements Serializable {
             System.out.println("OK");
             req.getSession(true).setAttribute("isLoggedIn", user);
             username = user;
-            rep.sendRedirect("index.xhtml");
+            rep.sendRedirect("index.xhtml?logged=true");
         }else{
-            rep.sendRedirect("error.xhtml");
+            rep.sendRedirect("login.xhtml?invalid=true");
         }
        
     }
