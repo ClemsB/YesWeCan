@@ -75,7 +75,11 @@ public class ProjectsController implements Serializable {
     }
     
     public void backProject(int id) {
-        
+        Users user = getLoggedUser();
+        if(user != null)
+        {
+            
+        }
     }
     
     public void doProject() {

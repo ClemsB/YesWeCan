@@ -125,4 +125,24 @@ public class Users implements Serializable {
         this.rewardsCollection = rewardsCollection;
     }
     
+    public void addRewardToCollection(Rewards reward) {
+        rewardsCollection.add(reward);
+    }
+    
+    public boolean hasReward(Rewards reward) {
+        for(Rewards currentReward : rewardsCollection) {
+            if(reward.getId().equals(currentReward.getId()))
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean hasReward(int rewardId) {
+        for(Rewards currentReward : rewardsCollection) {
+            if(rewardId == currentReward.getId())
+                return true;
+        }
+        return false;
+    }
+    
 }

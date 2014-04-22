@@ -4,18 +4,16 @@
  */
 package YesWeCan.Controller;
 
-import YesWeCan.Facade.ProjectsFacade;
+import YesWeCan.Facade.RewardsFacade;
 import YesWeCan.Facade.UsersFacade;
+import YesWeCan.Rewards;
 import YesWeCan.Users;
 import java.io.IOException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.security.Principal;
 import javax.ejb.EJB;
-import javax.faces.context.ExternalContext;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.*;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,6 +34,8 @@ public class UserController implements Serializable {
     
     @EJB
     private UsersFacade usersFacade;
+    @EJB
+    private RewardsFacade rewardsFacade;
     
     public UserController() {
         
@@ -107,5 +107,28 @@ public class UserController implements Serializable {
     
     public boolean isNotLogged(){
         return !isLogged();
+    }
+    
+    public boolean hasReward(int rewardId) {
+        Users user = getLoggedUser();
+        if(user != null)
+            return user.hasReward(rewardId);
+        return false;
+    }
+    
+    public boolean hasNotReward(int rewardId) {
+        Users user = getLoggedUser();
+        if(user != null)
+            return !user.hasReward(rewardId);
+        return true;
+    }
+    
+    public void addReward(int rewardId) {
+        Rewards reward = rewardsFacade.getId(rewardId);
+        
+        Users user = getLoggedUser();
+        if(user != null)
+            user.addRewardToCollection(reward);
+        
     }
 }
