@@ -11,7 +11,7 @@
         <ui:composition template="/template/layout.xhtml">
             <ui:define name="title">Yes We Can ! :: Accueil</ui:define>
             <ui:define name="content">
-                <c:if test="${param.logged eq 'true'}">you are now logged in</c:if>
+                <c:if test="${param.logged eq 'true'}"><div id="message">You are now logged in</div></c:if>
                 <h1>Yes We Can !</h1>
                 <hr />
                 <div class="page-header">

@@ -44,7 +44,7 @@
                         <h2>Récompenses :</h2>
                         <script>
                         $(document).ready(function() {
-                            $(".reward-item p").hide();
+                            $(".reward-item div").next().hide();
                             $(".reward").on("click", function() {
                                 var id = $(this).data("id");
                                 $( "#reward_"+id ).slideToggle("slow", function() {
@@ -57,7 +57,9 @@
                         <div class="reward-item">
                             <div class="reward" data-id="#{reward.id}">
                                 <h2>CHF #{reward.prize}, #{reward.usersNumber} prise sur #{reward.amount}</h2>
-                                <h:panelGroup rendered="#{userController.hasNotReward(reward.id)}">
+                                </div>
+                            <div id="reward_#{reward.id}" class="">#{reward.description}
+                            <h:panelGroup rendered="#{userController.hasNotReward(reward.id)}">
                                 <h:form>
                                     <h:inputHidden id="reward" value="#{reward.id}" />
                                     <h:commandButton value="Soutenir" class="btn btn-success" action="#{userController.addReward(reward.id)}" />	
@@ -65,7 +67,6 @@
                                 </h:panelGroup>
                                 <h:outputText value="Soutenu" rendered="#{userController.hasReward(reward.id)}"/>
                             </div>
-                            <p id="reward_#{reward.id}" class="">#{reward.description}</p>
                         </div>
                         </ui:repeat>
                     </div>
